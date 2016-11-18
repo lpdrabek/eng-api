@@ -1,0 +1,321 @@
+{% extends "skel.html" %}
+
+{% block title %}
+<title>Dokumentacja :: Praca inżynieyjska</title>
+{% endblock %}
+
+{% block style_block %} 
+<link rel="stylesheet" type="text/css" href="static/docs.css">
+{% endblock %}
+
+{% block body  %}
+<h1 id="top">Documentation</h1>
+<p>Brief document explaining the use of this API.</p>
+<h2 id="toc">Table of Contents:</h2>
+<ol>
+	<li><a href="#read">Listing operations</a></li>
+		<ol>
+			<li><a href="#r_author">Author class</a></li>
+			<li><a href="#r_book">Book class</a></li>
+		</ol>
+	<li><a href="#create">Adding new entries to the database</a></li>
+		<ol>
+			<li><a href="#c_author">Author class</a></li>
+			<li><a href="#c_book">Book class</a></li>
+		</ol>
+	<li><a href="#update">Updating existing entries</a></li>
+		<ol>
+			<li><a href="#u_author">Author class</a></li>
+			<li><a href="#u_book">Book class</a></li>
+		</ol>
+	<li><a href="#delete">Deleting existing entries</a></li>
+		<ol>
+			<li><a href="#d_author">Author class</a></li>
+			<li><a href="#d_book">Book class</a></li>
+		</ol>
+	<li><a href="#returns">Return codes</a></li>
+</ol>
+
+<hr />
+
+<h2 id="read">Listing operations</h2>
+<div class="http_method">HTTP method: <p class="method">GET</p></div>
+<h3 id="r_author">Author class</h3>
+	<p>You can list all authors by /api/authors. To narrow down your results you can use one, or many, parameters described below:</p>
+		<table class="parameter_table">
+		<caption><b>Table 1:</b> <i>Parameters to be used when listing authors.</i></caption>
+		<tr class="parameter_tr">
+			<th>Parameter</th>
+			<th>Description</th>
+			<th>Format</th>
+			<th>Possible values</th>
+		</tr>
+		<tr class="parameter_tr"><td>full_name</td>
+			<td><p>Filters authors by full name</p><p>Spaces can be defined either as a normal character or as "%20"</p></td>
+			<td>Character string</td>
+			<td><p>Jan Brzechwa</p><p>Jan%20Brzechwa</p></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>birth_date</td>
+			<td>Filters authors by date of their birth.</td>
+			<td><div class="format"><p>DD-MM-YYYY</p></div></td>
+			<td><div class="values"><p>30-12-2016</p></div></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>death_date</td>
+			<td>Filters authors by date of their death.</td>
+			<td><div class="format"><p>DD-MM-YYYY</p></div></td>
+			<td><div class="values"><p>30-12-2016</p></div></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>gender</td><td>Filters authors by date of their gender.</td>
+			<td><div class="format"><p>VARCHAR(1)</p></div></td>
+			<td><div class="values"><p>M, F</p></div></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>show_books</td>
+			<td>If true, a list of all books written by each author will be returned</td>
+			<td><div class="format">Bool</div></td>
+			<td><div class="values"><p>1, 0</p></div></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>show_id</td>
+			<td>If true, each author will be returned with his unique ID number</td>
+			<td><div class="format">Bool</div></td>
+			<td><div class="values"><p>1, 0</p></div></td>
+		</tr>
+		</table>
+	<div class="example_div"<p>Example usage: <a href="/api/authors?gender=M&show_books=1">/api/authors?gender=M&show_books=1</a></p></div>
+<h3 id="r_book">Book class</h3>
+	<p>You can list all book by /api/books. To narrow down your results you can use one, or many, parameters described below:</p>
+		<table class="parameter_table">
+		<caption><b>Table 2:</b> <i>Parameters to be used when listing books.</i></caption>
+		<tr class="parameter_tr">
+			<th>Parameter</th>
+			<th>Description</th>
+			<th>Format</th>
+			<th>Possible values</th>
+		</tr>
+		<tr class="parameter_tr"><td>title</td>
+			<td><p>Filters authors by full name</p><p>Spaces can be defined either as a normal character or as "%20"</p></td>
+			<td>Character string</td>
+			<td><p>Akademia Pana Kleksa</p><p>Akademia%20Pana%20Kleksa</p></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>isbn</td>
+			<td>Filters books by their unique ISBN number.</td>
+			<td><div class="format"><p>VARCHAR(17)</p></div></td>
+			<td><div class="values"><p>978-2-1234-5680-3</p></div></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>book_read</td>
+			<td>If true shows only read books.</td>
+			<td><div class="format"><p>Bool</p></div></td>
+			<td><div class="values"><p>1, 0</p></div></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>show_author</td>
+			<td>If true, each book will also return it's author.</td>
+			<td><div class="format">Bool</div></td>
+			<td><div class="values"><p>1, 0</p></div></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>show_id</td>
+			<td>If true, each book will be returned with it's unique ID number</td>
+			<td><div class="format">Bool</div></td>
+			<td><div class="values"><p>1, 0</p></div></td>
+		</tr>
+		</table>
+	<div class="example_div"<p>Example usage: <a href="/api/books?book_read=0&show_author=1">/api/books?book_read=0&show_author=1</a></p></div>
+
+[<a href="#top"> Go to Top </a>]&nbsp;[<a href="#toc"> Go to Table of Contents </a>]
+<hr />
+
+<h2 id="create">Adding new entries to the database</h2>
+<div class="http_method">HTTP method: <p class="method">POST</p></div>
+<h3 id="c_author">Author class</h3>
+	<p>You can add authors to the database by passing a POST request to /api/authors. Below you can find list of availible parameters</p>
+		<table class="parameter_table">
+		<caption><b>Table 3:</b> <i>Parameters to be used when adding new authors.</i></caption>
+		<tr class="parameter_tr">
+			<th>Parameter</th>
+			<th>Description</th>
+			<th>Format</th>
+			<th>Possible values</th>
+			<th>Required</th>
+		</tr>
+		<tr class="parameter_tr">
+			<td>full_name</td>
+			<td><p>Full name of the author.</p><p>Spaces can be defined either as a normal character or as "%20".</p></td>
+			<td>Character string</td>
+			<td><p>Jan Brzechwa</p><p>Jan%20Brzechwa</p></td>
+			<td class="required">YES</td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>birth_date</td>
+			<td>Date of birth of the author.</td>
+			<td><div class="format"><p>DD-MM-YYYY</p></div></td>
+			<td><div class="values"><p>30-12-2016</p></div></td>
+			<td>NO</td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>death_date</td>
+			<td>Date of death of the author.</td>
+			<td><div class="format"><p>DD-MM-YYYY</p></div></td>
+			<td><div class="values"><p>30-12-2016</p></div></td>
+			<td>NO</td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>gender</td>
+			<td>Gender of the author.</td>
+			<td><div class="format">VARCHAR(1)</div></td>
+			<td><div class="values"><p>M, F</p></div></td>
+			<td>NO</td>
+		</tr>
+		</table>
+	<div class="example_div"<p>Example usage: <p class="example">curl -X POST -d '{"full_name": "Andrzej Spakowski", "gender": "M"}' $API_URL/api/authors</p></div>
+
+<h3 id="c_book">Book class</h3>
+	<p>You can add books to the database by pasing a POST request to /api/books. Below you can find list of availible parameters</p>
+		<table class="parameter_table">
+		<caption><b>Table 4:</b> <i>Parameters to be used when adding new books.</i></caption>
+		<tr class="parameter_tr">
+			<th>Parameter</th>
+			<th>Description</th>
+			<th>Format</th>
+			<th>Possible values</th>
+			<th>Required</th>
+		</tr>
+		<tr class="parameter_tr">
+			<td>title</td>
+			<td><p>Title of the book</p><p>Spaces can be defined either as a normal character or as "%20"</p></td>
+			<td>Character string</td>
+			<td><p>Akademia Pana Kleksa</p><p>Akademia%20Pana%20Kleksa</p></td>
+			<td class="required">YES</td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>isbn</td>
+			<td>The unique ISBN number.</td>
+			<td><div class="format"><p>VARCHAR(17)</p></div></td>
+			<td><div class="values"><p>978-2-1234-5680-3</p></div></td>
+			<td>NO</td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>read</td>
+			<td>Determines whether the book has been read or not.</td>
+			<td><div class="format"><p>Bool</p></div></td>
+			<td><div class="values"><p>1, 0</p></div></td>
+			<td>NO</td>
+		</tr>
+		</table>
+	<div class="example_div"<p>Example usage: <p class="example">curl -X POST -d '{"author_id": 2, "title": "Miecz przeznaczenia", "isbn": "978-2-1234-5680-3"}' $API_URL/api/books</p></div>
+
+[<a href="#top"> Go to Top </a>]&nbsp;[<a href="#toc"> Go to Table of Contents </a>]
+<hr />
+
+<h2 id="update">Updating existing entries</h2>
+<div class="http_method">HTTP method: <p class="method">PUT, PATCH</p></div>
+<h3 id="u_author">Author class</h3>
+	<p>You can update author in the database by passing either a PUT or a PATCH request to /api/authors/$AUTHOR_ID</p>
+	<div class="warning"><p>Deleting author will delete <em>ALL</em> books associated with that author as well</p></div>
+		<table class="parameter_table">
+		<caption><b>Table 5:</b> <i>Parameters to be used when updating authors.</i></caption>
+		<tr class="parameter_tr">
+			<th>Parameter</th>
+			<th>Description</th>
+			<th>Format</th>
+			<th>Possible values</th>
+		</tr>
+		<tr class="parameter_tr">
+			<td>full_name</td>
+			<td><p>Full name of the author.</p><p>Spaces can be defined either as a normal character or as "%20".</p></td>
+			<td>Character string</td>
+			<td><p>Jan Brzechwa</p><p>Jan%20Brzechwa</p></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>birth_date</td>
+			<td>Date of birth of the author.</td>
+			<td><div class="format"><p>DD-MM-YYYY</p></div></td>
+			<td><div class="values"><p>30-12-2016</p></div></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>death_date</td>
+			<td>Date of death of the author.</td>
+			<td><div class="format"><p>DD-MM-YYYY</p></div></td>
+			<td><div class="values"><p>30-12-2016</p></div></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>gender</td>
+			<td>Gender of the author.</td>
+			<td><div class="format">VARCHAR(1)</div></td>
+			<td><div class="values"><p>M, F</p></div></td>
+		</tr>
+		</table>
+	<div class="example_div">Example usage: <p class="example">curl -X PUT $API_URL/api/authors/1</p></div>
+	
+<h3 id="u_book">Book class</h3>
+	<p>You can update book in the database by passing either a PUT or a PATCH reuqest to /api/books/$BOOK_ID</p>
+		<table class="parameter_table">
+		<caption><b>Table 6:</b> <i>Parameters to be used when updating books.</i></caption>
+		<tr class="parameter_tr">
+			<th>Parameter</th>
+			<th>Description</th>
+			<th>Format</th>
+			<th>Possible values</th>
+		</tr>
+		<tr class="parameter_tr">
+			<td>title</td>
+			<td><p>Title of the book</p><p>Spaces can be defined either as a normal character or as "%20"</p></td>
+			<td>Character string</td>
+			<td><p>Akademia Pana Kleksa</p><p>Akademia%20Pana%20Kleksa</p></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>isbn</td>
+			<td>The unique ISBN number.</td>
+			<td><div class="format"><p>VARCHAR(17)</p></div></td>
+			<td><div class="values"><p>978-2-1234-5680-3</p></div></td>
+		</tr>
+		<tr class="parameter_tr">
+			<td>read</td>
+			<td>Determines whether the book has been read or not.</td>
+			<td><div class="format"><p>Bool</p></div></td>
+			<td><div class="values"><p>1, 0</p></div></td>
+		</tr>
+		</table>
+	<div class="example_div">Example usage: <p class="example">curl -X PUT $API_URL/api/books/1</p>
+
+[<a href="#top"> Go to Top </a>]&nbsp;[<a href="#toc"> Go to Table of Contents </a>]
+<hr />
+
+<h2 id="delete">Deleting existing entries</h2>
+<div class="http_method">HTTP method: <p class="method">DELETE</p></div>
+<h3 id="d_author">Author class</h3>
+	<p>You can remove author from the database by passing a DELETE request to /api/authors/$AUTHOR_ID</p>
+	<div class="warning"><p>Deleting author will delete <em>ALL</em> books associated with that author as well</p></div>
+	<div class="example_div">Example usage: <p class="example">curl -X DELETE $API_URL/api/authors/1</p></div>
+	
+<h3 id="d_book">Book class</h3>
+	<p>You can remove books from the database by passing a DELETE reuqest to /api/books/$BOOK_ID</p>
+	<div class="example_div">Example usage: <p class="example">curl -X DELETE $API_URL/api/books/1</p>
+	
+
+[<a href="#top"> Go to Top </a>]&nbsp;[<a href="#toc"> Go to Table of Contents </a>]
+<hr />
+
+<h2 id="returns">Return codes</h2>
+<p>List of return codes with brief explanation</p>
+	<table class="parameter_table">
+		<caption><b>Table 7:</b> <i>List of return codes.</i></caption>
+		<tr class="parameter_tr">
+			<th>Code</th>
+			<th>Description</th>
+		</tr>
+		{% for code in return_codes %}
+		<tr class="parameter_tr">
+			<td>{{ code }}</td>
+			<td>{{ return_codes[code]["msg"] }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+[<a href="#top"> Go to Top </a>]&nbsp;[<a href="#toc"> Go to Table of Contents </a>]
+{% endblock %}

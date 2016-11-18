@@ -1,0 +1,65 @@
+.parameter_table
+{
+	border: 1px solid black;
+	border-collapse: collapse; 
+	caption-side: bottom;
+	margin: 10px 0px 10px 0px; 
+}
+
+.parameter_table td,
+.parameter_table th
+{
+	border: 1px solid black;
+	padding: 5px;
+	margin: 5px;
+
+}
+
+.parameter_table td:nth-child(3),
+.parameter_table td:nth-child(4)
+{
+	text-align: center;
+	margin: 2px 2px 2px 2px;
+	padding: 2px 2px 2px 2px;
+}
+
+div.format
+{
+	margin: 2px;
+	font-weight: bold;
+	padding-top: 7px
+}
+
+div.format > p
+{
+	margin: 2px;
+}
+
+div.default
+{
+	margin: 2px;
+}
+
+div.default > p
+{
+	margin: 2px;
+	font-style: italic;
+}
+
+div.values
+{
+	margin: 2px;
+	padding: 0px;
+}
+
+div.values > p
+{
+	margin: 2px;
+	text-align: center;
+	font-style: italic;
+}
+
+div.warning
+{
+	color: #ff5050;
+}
