@@ -1,0 +1,37 @@
+version: "2" 
+services: 
+    db: 
+        restart: always
+        image: mariadb:10.1
+        container_name: mariadb01
+        hostname: mariadb01
+#       ports:
+#          - '3306:3306'
+        expose:
+          - '3306'
+        environment:
+          - MYSQL_ROOT_PASSWORD=Strong_R00T_passWORD
+          - MYSQL_DATABASE=eng_api
+          - MYSQL_USER=engineer
+          - MYSQL_PASSWORD=Strong_PASS
+        volumes: 
+          -  ./mariadb/database:/var/lib/mysql
+    api:
+        restart: always
+        build: .
+        container_name: api
+        hostname: api
+        ports:
+          -  '8000:8000'
+        links:
+          - db
+        command: ./run_api.sh
+    nginx:
+        restart: always
+        build: nginx/
+        container_name: web01
+        hostname: web01
+        ports:
+          -  '80:80'
+        links:
+          -  api

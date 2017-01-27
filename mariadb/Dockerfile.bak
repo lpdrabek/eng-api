@@ -1,0 +1,7 @@
+FROM mariadb:10.1
+
+RUN mkdir /initial
+ADD initial_values.sql /initial
+ADD init.sh /initial
+
+RUN /initial/init.sh
