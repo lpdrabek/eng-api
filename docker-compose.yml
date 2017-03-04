@@ -14,8 +14,8 @@ services:
           - MYSQL_DATABASE=eng_api
           - MYSQL_USER=engineer
           - MYSQL_PASSWORD=Strong_PASS
-        volumes: 
-          -  ./mariadb/database:/var/lib/mysql
+#        volumes: 
+#          -  ./mariadb/database:/var/lib/mysql
     api:
         restart: always
         build: .
