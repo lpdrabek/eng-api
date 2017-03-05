@@ -51,9 +51,9 @@
 			<th>Possible values</th>
 		</tr>
 		<tr class="parameter_tr"><td>full_name</td>
-			<td><p>Filters authors by full name</p><p>Spaces can be defined either as a normal character or as "%20"</p></td>
+			<td><p>Filters authors by full name</p></td>
 			<td>Character string</td>
-			<td><p>Jan Brzechwa</p><p>Jan%20Brzechwa</p></td>
+			<td><p>Jan Brzechwa</p></td>
 		</tr>
 		<tr class="parameter_tr">
 			<td>birth_date</td>
@@ -97,9 +97,9 @@
 			<th>Possible values</th>
 		</tr>
 		<tr class="parameter_tr"><td>title</td>
-			<td><p>Filters authors by full name</p><p>Spaces can be defined either as a normal character or as "%20"</p></td>
+			<td><p>Filters authors by full name</p></td>
 			<td>Character string</td>
-			<td><p>Akademia Pana Kleksa</p><p>Akademia%20Pana%20Kleksa</p></td>
+			<td><p>Akademia Pana Kleksa</p></td>
 		</tr>
 		<tr class="parameter_tr">
 			<td>isbn</td>
@@ -146,9 +146,9 @@
 		</tr>
 		<tr class="parameter_tr">
 			<td>full_name</td>
-			<td><p>Full name of the author.</p><p>Spaces can be defined either as a normal character or as "%20".</p></td>
+			<td><p>Full name of the author.</p></td>
 			<td>Character string</td>
-			<td><p>Jan Brzechwa</p><p>Jan%20Brzechwa</p></td>
+			<td><p>Jan Brzechwa</p></td>
 			<td class="required">YES</td>
 		</tr>
 		<tr class="parameter_tr">
@@ -173,7 +173,7 @@
 			<td>NO</td>
 		</tr>
 		</table>
-	<div class="example_div"<p>Example usage: <p class="example">curl -X POST -d '{"full_name": "Andrzej Spakowski", "gender": "M"}' $API_URL/api/authors</p></div>
+	<div class="example_div"<p>Example usage: <p class="example">curl -iH "Content-Type: application/json" -X POST -d '{"full_name": "Andrzej Spakowski", "gender": "M"}' $API_URL/api/authors</p></div>
 
 <h3 id="c_book">Book class</h3>
 	<p>You can add books to the database by pasing a POST request to /api/books. Below you can find list of availible parameters</p>
@@ -188,9 +188,9 @@
 		</tr>
 		<tr class="parameter_tr">
 			<td>title</td>
-			<td><p>Title of the book</p><p>Spaces can be defined either as a normal character or as "%20"</p></td>
+			<td><p>Title of the book</p></td>
 			<td>Character string</td>
-			<td><p>Akademia Pana Kleksa</p><p>Akademia%20Pana%20Kleksa</p></td>
+			<td><p>Akademia Pana Kleksa</p></td>
 			<td class="required">YES</td>
 		</tr>
 		<tr class="parameter_tr">
@@ -208,7 +208,7 @@
 			<td>NO</td>
 		</tr>
 		</table>
-	<div class="example_div"<p>Example usage: <p class="example">curl -X POST -d '{"author_id": 2, "title": "Miecz przeznaczenia", "isbn": "978-2-1234-5680-3"}' $API_URL/api/books</p></div>
+	<div class="example_div"<p>Example usage: <p class="example">curl -iH "Content-Type: application/json" -X POST -d '{"author_id": 2, "title": "Miecz przeznaczenia", "isbn": "978-2-1234-5680-3"}' $API_URL/api/books</p></div>
 
 [<a href="#top"> Go to Top </a>]&nbsp;[<a href="#toc"> Go to Table of Contents </a>]
 <hr />
@@ -217,7 +217,6 @@
 <div class="http_method">HTTP method: <p class="method">PUT, PATCH</p></div>
 <h3 id="u_author">Author class</h3>
 	<p>You can update author in the database by passing either a PUT or a PATCH request to /api/authors/$AUTHOR_ID</p>
-	<div class="warning"><p>Deleting author will delete <em>ALL</em> books associated with that author as well</p></div>
 		<table class="parameter_table">
 		<caption><b>Table 5:</b> <i>Parameters to be used when updating authors.</i></caption>
 		<tr class="parameter_tr">
@@ -228,9 +227,9 @@
 		</tr>
 		<tr class="parameter_tr">
 			<td>full_name</td>
-			<td><p>Full name of the author.</p><p>Spaces can be defined either as a normal character or as "%20".</p></td>
+			<td><p>Full name of the author.</p></td>
 			<td>Character string</td>
-			<td><p>Jan Brzechwa</p><p>Jan%20Brzechwa</p></td>
+			<td><p>Jan Brzechwa</p></td>
 		</tr>
 		<tr class="parameter_tr">
 			<td>birth_date</td>
@@ -251,7 +250,7 @@
 			<td><div class="values"><p>M, F</p></div></td>
 		</tr>
 		</table>
-	<div class="example_div">Example usage: <p class="example">curl -X PUT $API_URL/api/authors/1</p></div>
+	<div class="example_div">Example usage: <p class="example">curl -iH "Content-Type: application/json" -X PUT eng.gringo.ovh/api/authors/1 -d '{"death_date": "15-11-1916"}'</p></div>
 	
 <h3 id="u_book">Book class</h3>
 	<p>You can update book in the database by passing either a PUT or a PATCH reuqest to /api/books/$BOOK_ID</p>
@@ -265,9 +264,9 @@
 		</tr>
 		<tr class="parameter_tr">
 			<td>title</td>
-			<td><p>Title of the book</p><p>Spaces can be defined either as a normal character or as "%20"</p></td>
+			<td><p>Title of the book</p></td>
 			<td>Character string</td>
-			<td><p>Akademia Pana Kleksa</p><p>Akademia%20Pana%20Kleksa</p></td>
+			<td><p>Akademia Pana Kleksa</p></td>
 		</tr>
 		<tr class="parameter_tr">
 			<td>isbn</td>
@@ -276,13 +275,19 @@
 			<td><div class="values"><p>978-2-1234-5680-3</p></div></td>
 		</tr>
 		<tr class="parameter_tr">
-			<td>read</td>
+			<td>book_read</td>
 			<td>Determines whether the book has been read or not.</td>
 			<td><div class="format"><p>Bool</p></div></td>
 			<td><div class="values"><p>1, 0</p></div></td>
 		</tr>
+		<tr class="parameter_tr">
+			<td>author_id</td>
+			<td>ID of the new author in the database.</td>
+			<td><div class="format"><p>Bool</p></div></td>
+			<td><div class="values"><p>1, 0</p></div></td>
+		</tr>
 		</table>
-	<div class="example_div">Example usage: <p class="example">curl -X PUT $API_URL/api/books/1</p>
+	<div class="example_div">Example usage: <p class="example">curl -iH "Content-Type: application/json" -X PUT eng.gringo.ovh/api/books/7 -d '{"book_read": 1}'</p>
 
 [<a href="#top"> Go to Top </a>]&nbsp;[<a href="#toc"> Go to Table of Contents </a>]
 <hr />

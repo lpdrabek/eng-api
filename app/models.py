@@ -46,9 +46,16 @@ class Author(db.Model):
 
     def __init__(self, full_name, birth_date=None, death_date=None, gender=None):
         self.full_name = full_name
-        self.birth_date = birth_date
-        self.death_date = death_date
         self.gender = gender
+
+        if isinstance(birth_date, str):
+            birth_date = datetime.strptime(birth_date, "%d-%m-%Y")
+        else:
+            self.birth_date = birth_date
+        if isinstance(death_date, str):
+            death_date = datetime.strptime(death_date, "%d-%m-%Y")
+        else:
+            self.death_date = death_date
 
     def as_dict(self, show_id=False, show_books=False):
         rsp = {"name": self.full_name,

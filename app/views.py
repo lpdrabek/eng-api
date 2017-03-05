@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from flask import render_template, request, abort, Response
 
-from app import app, session, db
+from app import app, Session, db
 from app.models import Author, Book
 from app.return_codes import return_code
 
@@ -21,6 +21,7 @@ def documentation():
 @app.route('/api/authors/',
            methods=['POST'], strict_slashes=False)
 def autor_add():
+    session = Session()
     full_name = ""
     birth_date = None
     death_date = None
@@ -58,12 +59,14 @@ def autor_add():
     rsp = Response(rsp_dict)
     rsp.headers.add("Location", "/api/authors/{}".format(new_author.id))
 
+    session.close()
     return rsp, 201
 
 
 @app.route('/api/authors/',
            methods=['GET'], strict_slashes=False)
 def author_list():
+    session = Session()
     query = session.query(Author)
     show_books = bool(int(request.args.get("show_books", 0)))
     show_id = bool(int(request.args.get("show_id", 0)))
@@ -77,12 +80,14 @@ def author_list():
         query = query.filter(Author.gender == request.args.get("gender"))
 
     rsp = [author.as_dict(show_id, show_books) for author in query]
+    session.close()
     return json.dumps(rsp)
 
 
 @app.route('/api/authors/<int:author_id>',
            methods=['GET'], strict_slashes=False)
 def author_list_by_id(author_id):
+    session = Session()
     query = session.query(Author)
     show_books = True
     show_id = False
@@ -98,12 +103,14 @@ def author_list_by_id(author_id):
         show_id = True
     rsp = [author.as_dict(show_id, show_books) for author in query]
 
+    session.close()
     return json.dumps(rsp)
 
 
 @app.route('/api/authors/<int:author_id>',
            methods=["PUT", "PATCH"], strict_slashes=False)
 def author_update(author_id):
+    session = Session()
     to_update = {}
 
     if "full_name" in request.json:
@@ -135,12 +142,14 @@ def author_update(author_id):
 
     rsp = Response(rsp_dict)
 
+    session.close()
     return rsp, 200
 
 
 @app.route('/api/authors/<int:author_id>',
            methods=["DELETE"], strict_slashes=False)
 def author_delete(author_id):
+    session = Session()
     if not exists_in_db("id", author_id, "Author"):
         return json.dumps(return_code[4]), 404
 
@@ -155,6 +164,7 @@ def author_delete(author_id):
 
     rsp = Response(rsp_dict)
 
+    session.close()
     return rsp, 200
 
 
@@ -167,6 +177,7 @@ def author_list_404():
 @app.route('/api/books/',
            methods=['POST'], strict_slashes=False)
 def book_add():
+    session = Session()
     authorid = None
     title = None
     isbn = None
@@ -210,12 +221,14 @@ def book_add():
     rsp = Response(rsp_dict)
     rsp.headers.add("Location", "/api/books/{}".format(new_book.id))
 
+    session.close()
     return rsp, 201
 
 
 @app.route('/api/books',
            methods=['GET'], strict_slashes=False)
 def book_list():
+    session = Session()
     query = session.query(Book)
     show_author = bool(int(request.args.get("show_author", 0)))
     show_id = bool(int(request.args.get("show_id", 0)))
@@ -227,12 +240,14 @@ def book_list():
         query = query.filter(Book.book_read == request.args.get("book_read"))
 
     rsp = [book.as_dict(show_id, show_author) for book in query]
+    session.close()
     return json.dumps(rsp), 200
 
 
 @app.route('/api/books/<int:book_id>',
            methods=['GET'], strict_slashes=False)
 def book_list_by_id(book_id):
+    session = Session()
     query = session.query(Book).filter(Book.id == book_id)
     show_author = False
     show_id = False
@@ -246,12 +261,14 @@ def book_list_by_id(book_id):
         show_id = True
 
     rsp = [book.as_dict(show_id, show_author) for book in query]
+    session.close()
     return json.dumps(rsp), 200
 
 
 @app.route('/api/books/<int:book_id>',
            methods=["PUT", "PATCH"], strict_slashes=False)
 def book_update(book_id):
+    session = Session()
     to_update = {}
 
     if "title" in request.json:
@@ -261,7 +278,7 @@ def book_update(book_id):
     if "book_read" in request.json:
         to_update["book_read"] = request.json["book_read"]
     if "author_id" in request.json:
-        to_update["author_id"] = request.json["author_id"]
+        to_update["authorid"] = request.json["author_id"]
         if not exists_in_db("id", to_update["author_id"], "Author"):
             return json.dumps(return_code[5]), 404
 
@@ -285,12 +302,14 @@ def book_update(book_id):
 
     rsp = Response(rsp_dict)
 
+    session.close()
     return rsp, 200
 
 
 @app.route('/api/books/<int:book_id>',
            methods=['DELETE'], strict_slashes=False)
 def book_delete(book_id):
+    session = Session()
     if not exists_in_db("id", book_id, "Book"):
         return json.dumps(return_code[4]), 404
 
@@ -305,6 +324,7 @@ def book_delete(book_id):
 
     rsp = Response(rsp_dict)
 
+    session.close()
     return rsp, 200
 
 
@@ -315,6 +335,7 @@ def book_list_404():
 
 
 def exists_in_db(var, value, obj):
+    session = Session()
     query = ""
     if obj == "Author":
         query = session.query(Author)
@@ -332,6 +353,7 @@ def exists_in_db(var, value, obj):
             return False
         if var == "id":
             query = query.filter(Book.id == value).first()
+    session.close()
     if query:
         return True
     return False

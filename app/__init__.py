@@ -11,7 +11,6 @@ db = SQLAlchemy(app)
 db_engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 
 Session = sessionmaker(bind=db_engine)
-session = Session()
 
 
 from app import views, models

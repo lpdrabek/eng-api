@@ -11,9 +11,11 @@ services:
           - '3306'
         environment:
           - MYSQL_ROOT_PASSWORD=Strong_R00T_passWORD
-          - MYSQL_DATABASE=eng_api
+          - MYSQL_DATABASE=eng-api
           - MYSQL_USER=engineer
           - MYSQL_PASSWORD=Strong_PASS
+        volumes:
+          - ./mariadb:/docker-entrypoint-initdb.d
 #        volumes: 
 #          -  ./mariadb/database:/var/lib/mysql
     api:
