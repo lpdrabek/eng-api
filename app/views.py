@@ -279,7 +279,7 @@ def book_update(book_id):
         to_update["book_read"] = request.json["book_read"]
     if "author_id" in request.json:
         to_update["authorid"] = request.json["author_id"]
-        if not exists_in_db("id", to_update["author_id"], "Author"):
+        if not exists_in_db("id", to_update["authorid"], "Author"):
             return json.dumps(return_code[5]), 404
 
     if len(to_update) == 0:
