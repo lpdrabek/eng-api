@@ -116,9 +116,11 @@ def author_update(author_id):
     if "full_name" in request.json:
         to_update["full_name"] = request.json["full_name"]
     if "birth_date" in request.json:
-        to_update["birth_date"] = request.json["birth_date"]
+        to_update["birth_date"] = datetime.strptime(request.json["birth_date"],
+                                                             "%d-%m-%Y")
     if "death_date" in request.json:
-        to_update["death_date"] = request.jsoni["death_date"]
+        to_update["death_date"] = datetime.strptime(request.json["death_date"],
+                                                             "%d-%m-%Y")
     if "gender" in request.json:
         to_update["gender"] = request.json["gender"]
 
@@ -129,6 +131,8 @@ def author_update(author_id):
 
     if not author:
         return json.dumps(return_code[4]), 404
+
+    
 
     for parameter, value in to_update.items():
         setattr(author, parameter, value)

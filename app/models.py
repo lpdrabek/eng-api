@@ -49,11 +49,11 @@ class Author(db.Model):
         self.gender = gender
 
         if isinstance(birth_date, str):
-            self.birth_date = datetime.strptime(birth_date, "%d-%m-%Y")
+            self.birth_date = datetime.datetime.strptime(birth_date, "%d-%m-%Y")
         else:
             self.birth_date = birth_date
         if isinstance(death_date, str):
-            self.death_date = datetime.strptime(death_date, "%d-%m-%Y")
+            self.death_date = datetime.datetime.strptime(death_date, "%d-%m-%Y")
         else:
             self.death_date = death_date
 
