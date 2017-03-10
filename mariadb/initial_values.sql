@@ -1,4 +1,4 @@
-use eng-api;
+use eng_api;
 
 CREATE TABLE author (
      id INTEGER(20) NOT NULL AUTO_INCREMENT,
